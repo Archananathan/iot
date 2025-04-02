@@ -1,0 +1,31 @@
+int sensorPin = A0; // TMP36 sensor connected to Analog Pin A0
+float voltage, temperature;
+#define led_pin 4
+void setup() {
+    pinMode(led_pin , OUTPUT);
+    Serial.begin(9600); // Start serial communication
+    Serial.println("TMP36 Temperature Sensor Reading...");
+}
+
+void loop() {
+    int sensorValue = analogRead(sensorPin); // Read sensor value
+    voltage = sensorValue * (5.0 / 1023.0); // Convert to voltage
+    temperature = (voltage - 0.5) * 100; // Convert voltage to Celsius
+
+    Serial.print("Temperature: ");
+    Serial.print(temperature);
+    Serial.println(" °C");
+  
+    if (temperature > 24 )
+    {
+      digitalWrite(led_pin,HIGH);
+      Serial.println("LED ON");
+    }
+    else
+    {
+      digitalWrite(led_pin,LOW);
+      Serial.println("LED OFF");
+    }
+
+    delay(2000); // Wait 2 seconds before next reading
+}
